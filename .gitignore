@@ -1,0 +1,4 @@
+*.pyc
+.idea
+payment/view.py
+staticfiles/*

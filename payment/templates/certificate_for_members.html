@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate</title>
+    <head>
+    </head>
+    <style>
+        @media print{@page {size: landscape}}
+    </style>
+<body style="text-align: center;margin: 0;
+padding: 0;">
+    <div class="container" style="border: 20px solid rgb(128, 0, 128);
+    max-width: 1200px;
+    vertical-align: middle;
+    padding: 50px;">
+        <div class="logo" style="max-width: 500px; width: 100%; margin: 0 auto;">
+            <img src="file:///home/ubuntu/project/aaqf_portal/static/img/AAQF_logo.png" alt="" style="width: 200px;">
+        </div>
+
+        <div>
+            <h2 style=" color: rgb(128, 0, 128);
+            font-size: 28px;
+            margin: 15px;">CERTIFICATE OF MEMBERSHIP</h2>
+            <span style="font-style: italic; margin: 20px 0; font-size: 18px;">This is to attest that</span>
+        </div>
+
+        <div class="assignment">
+            <h4 style=" color: rgb(128, 0, 128);
+            font-size: 28px;
+            margin: 15px;">{{organization}}</h4>
+            <p style="margin: 20px 0; font-size: 20px;"><strong>{{address1}} <Br>
+                {{city}}, {{state}} {{country}} {{zip_code}}</strong></p>
+        </div>
+
+        <div class="">
+            <p style="margin: 15px auto; font-size: 16px;max-width: 700px; width: 100%; line-height: 1.5;">Is an
+                {{name}} Member in good standing with the
+                American Association of Quality Facilities.
+            </p>
+        </div>
+
+        <div class="date">
+            <p style="font-style: italic; margin: 25px 0; font-size: 28px;line-height: 1.5;">
+                Effective Date: {{start_date|date}}<br>
+                Expiration Date: {{end_date|date}}</p>
+
+        </div>
+        <div class="signs" style="display: flex; justify-content: space-between; align-items: center;">
+            <p style="font-size: 10px;max-width: 400px; width: 100%; text-align: left;"><strong>This membership
+                    certificate supersedes any AAQF membership bearing an earlier effective date. The
+                    certificate becomes invalid upon suspension, cancellation or revocation of membership. See
+                <a href="http://www.aaqf.net/">www.aaqf.net</a>
+                    for current membership information.</strong> </p>
+            <div class="signs-wrap" >
+                <img src="file:///home/ubuntu/project/aaqf_portal/static/img/signs.png" style="width: 150px;" alt=""><br>
+                <p style="border-top: 2px solid #000; padding: 10px 20px; margin: 25px 0; font-size: 10px;line-height: 1.5;"><strong>Christina Sanchez Miller, MPH <br>President/CEO</strong></p>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

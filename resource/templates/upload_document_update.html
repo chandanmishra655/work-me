@@ -1,0 +1,52 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block card %}
+<!-- Page Header-->
+<header class="page-header">
+  <div class="container-fluid">
+    <h2 class="no-margin-bottom">Update Document</h2>
+  </div>
+</header>
+<section class="dashboard-counts no-padding-bottom">
+<div class="container-fluid">
+  <div class="row bg-white has-shadow">
+    <div class="container bootstrap snippets bootdey">
+        <a href="/resource/document/">ADD</a>
+        <a href="/resource/document_list/">List</a>
+     <form name="upload_documents" id="upload_documents" enctype="multipart/form-data" method="post">
+       {% csrf_token %}
+        <div class="row">
+          <div class="col-lg-12 mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Document Name</label>
+            <input type="text" value="{{header.doc_name}}" name="doc_name" class="form-control" id="exampleFormControlInput1" placeholder="">
+          </div>
+          <div class="col-lg-12 mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Visible For</label>
+              <!--Prefix-->
+              <select class="form-control" id="visible_for_id" name="visible_for" aria-label="Default select example" required>
+                    <option value="0" {% if header.member_type == '0' %} selected {% endif %}>All members</option>
+                    <option value="1" {% if header.member_type == '1' %} selected {% endif %}>Individual members</option>
+                    <option value="2" {% if header.member_type == '2' %} selected {% endif %}>Organizational members</option>
+                    <option value="3" {% if header.member_type == '3' %} selected {% endif %}>Accredited members</option>
+              </select>
+          </div>
+          <div class="col-lg-12">
+            <label for="doc_file_path" class="form-label">Document</label>
+              <div class="form-group files color">
+                <input type="hidden" value="{{header.file}}" name="doc_file_path" id="doc_file_path" class="form-control" multiple="">
+                <input type="file" name="doc_file" id="doc_file_id" class="form-control">
+              </div>
+
+          </div>
+          <div class="clearfix"></div>
+          <div class="col-lg-5">
+          <input type="submit" class="btn btn-primary" name="Submit" value="Submit">
+          </div>
+      </div>
+       </form>
+</div>
+  </div>
+</div>
+</section>
+{% endblock %}

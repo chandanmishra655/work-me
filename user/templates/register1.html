@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>aaqf</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="{% static 'assets/font-awesome/css/font-awesome.min.css' %}">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="{% static 'assets/css/fontastic.css' %}">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="{% static 'assets/css/style.default.css' %}" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'assets/img/favicon.ico' %}">
+    <!-- Tweaks for older IEs-->
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <style type="text/css">
+        .registration_form {
+            position: relative;
+        }
+
+        .registration_form .card-body {
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .registration_form .card-body .register-val{
+            z-index: 99;
+        }
+        .registration_form .card-body .text-center{
+            z-index: 99;
+        }
+
+        .registration_form:before {
+            content: '';
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: -1;
+            background: url('https://static-communitytable.parade.com/wp-content/uploads/2014/03/rethink-target-heart-rate-number-ftr.jpg');
+            background-size: cover;
+            -webkit-filter: blur(10px);
+            filter: blur(10px);
+            background-repeat: no-repeat;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+
+        *[role="form"] {
+            max-width: 530px;
+            padding: 15px;
+            margin: 0 auto;
+            border-radius: 0.3em;
+            background-color: #fff;
+            z-index: 999;
+        }
+
+        *[role="form"] h2 {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 25px;
+            font-weight: 600;
+            color: #A027BB;
+            margin-top: 5%;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .register-val {
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <section class="registration_form">
+        <div class="overlay"></div>
+        <!-- /.overlay -->
+        <div class="card-body">
+            <div class="container register-val">
+
+                <form class="user form-horizontal" id="registration_form" role="form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h2>Create Account</h2>
+                    <p class="text-center"><span style="font-size: 16px;">Please complete the fields below to create
+                            your user profile and password.</span></p>
+                    <h3>Personal Information</h3>
+                    <div class="form-group">
+                        <input type="hidden" name="membership_id" value="{{mid}}">
+                        <!--Prefix-->
+                        <select class="input-material" id="prefix" name="prefix" aria-label="Default select example"
+                            required>
+                            <option selected="selected" value="">Prefix*</option>
+                            {% for prefix in prefix %}
+                            <option value="{{prefix.op_id}}">{{prefix.op_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- firstName -->
+                    <div class="form-group">
+                        <input type="text" id="firstName" name="first_name" class="input-material" autocomplete="off" required>
+                        <label for="firstName" class="label-material">First Name*</label>
+                    </div>
+
+                    <!-- middleName -->
+                    <div class="form-group">
+                        <input type="text" id="middleName" name="middle_name" class="input-material" autocomplete="off">
+                        <label for="middleName" class="label-material">Middle Name</label>
+                    </div>
+
+                    <!-- lastName -->
+
+                    <div class="form-group">
+                        <input type="text" id="lastName" name="last_name" class="input-material" autocomplete="off" required >
+                        <label for="lastName" class="label-material">Last Name*</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="organization" name="organization" class="input-material" autocomplete="off" required >
+                        <label for="organization" class="label-material">Organization*</label>
+                    </div>
+
+                    <!--Title -->
+
+                    <div class="form-group">
+                        <input type="text" id="title" name="title" class="input-material" autocomplete="off" required >
+                        <label for="title" class="label-material">Title</label>
+                    </div>
+                    <h3>Address Information</h3>
+                    <!--Address Information -->
+                    <div class="form-group">
+                        <input type="text" id="mailingaddress" name="mailingaddress" class="input-material" autocomplete="off" required >
+                        <label for="mailingaddress" class="label-material">Mailing address*</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="address-line-2" name="address_line2" class="input-material" autocomplete="off" >
+                        <label for="address-line-2" class="label-material">Address line 2</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="city" name="city" class="input-material" autocomplete="off" required >
+                        <label for="city" class="label-material">City*</label>
+                    </div>
+
+                    <div class="form-group">
+                        <select name="adr_country" class="input-material" id="adr_country" onchange="get_state();"  required>
+                            <option value="">Select Country*</option>
+                            {% for country in country %}
+                            <option value="{{country.id}}">{{country.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <select name="adr_state" class="input-material" id="adr_state" tabindex="25" required>
+                            <option value="">State/Province*</option>
+
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" id="adr_post_code" name="adr_post_code" class="input-material" autocomplete="off" required >
+                        <label for="adr_post_code" class="label-material">ZIP code*</label>
+                    </div>
+
+<!--                    <div class="form-group">-->
+<!--                        <input type="text" id="adr_intl_province" name="adr_intl_province" autocomplete="off" class="input-material" >-->
+<!--                        <label for="adr_intl_province" class="label-material">International province</label>-->
+<!--                    </div>-->
+                    <!-- Web Login Information -->
+                    <h3>Web Login Information</h3>
+                    <div class="form-group">
+                        <input type="text" id="eml_address" name="eml_address" class="input-material english_email english_only" autocomplete="off" required >
+                        <label for="eml_address" class="label-material">Email*</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="phone_number" name="phone_number" class="input-material" autocomplete="off" required >
+                        <label for="phone_number" class="label-material">Phone Number*</label>
+                    </div>
+
+
+                    <div class="form-group">
+                        <input type="password" name="new_password" id="new_password_ext" class="input-material" autocomplete="off" required >
+                        <label for="new_password_ext" class="label-material">Password*</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" name="cnf_password" id="cnf_password" class="input-material" autocomplete="off" required >
+                        <label for="cnf_password" class="label-material">Confirm Password*</label>
+                    </div>
+                    <button type="button" name="registration_submit" id="registration_submit" class="btn btn-primary btn-block">Register</button>
+                </form>
+            </div> <!-- ./container -->
+            <div class="text-center">
+                <a class="small" href="/user/login">Already have an account? Login!</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="{% static 'assets/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/popper.js/umd/popper.min.js' %}"> </script>
+    <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/jquery.cookie/jquery.cookie.js' %}"> </script>
+    <script src="{% static 'assets/jquery-validation/jquery.validate.min.js' %}"></script>
+    <!-- Main File-->
+    <script src="{% static 'assets/js/front.js' %}"></script>
+    <script src="{% static 'assets/js/sweetalert.js' %}"></script>
+
+    <script>
+    $(function(){
+        $(".english_email").keypress(function(event){
+            var ew = event.which;
+            console.log(ew);
+            if(ew == 32)
+                return true;
+            if(46 <= ew && ew <= 57)
+                return true;
+            if(64 <= ew && ew <= 90)
+                return true;
+            if(97 <= ew && ew <= 122)
+                return true;
+            return false;
+        });
+    });
+
+    $(document).ready(function(){
+        $(".english_only").on("keyup", function(){
+           console.log(/^[ A-Za-z_0-9@./#&+-]*$/i.test($(this).val().trim()));
+        });
+        $('.english_only').on("paste",function(e)
+        {
+            e.preventDefault();
+        });
+    });
+
+
+
+    $(document).on('click','#registration_submit',function(e){
+        e.preventDefault();
+        var frm = $('#registration_form');
+        var form_data = new FormData(frm[0])
+
+        if($("#prefix").val() == ''){
+            Swal.fire({
+                    type: 'error',
+                    text: 'Please select prefix',
+            });
+            return false;
+        }
+        if($("#firstName").val() == ''){
+            Swal.fire({
+                    type: 'error',
+                    text: 'Please enter first name',
+            });
+            return false;
+        }
+
+        if($("#lastName").val() == ''){
+            Swal.fire({
+                    type: 'error',
+                    text: 'Please enter last name',
+            });
+            return false;
+        }
+
+        if($("#organization").val() == ''){
+            Swal.fire({
+                    type: 'error',
+                    text: 'Please enter organization',
+            });
+            return false;
+        }
+
+        if($("#mailingaddress").val() == ''){
+            Swal.fire({
+                    type: 'error',
+                    text: 'Please enter mailing address',
+            });
+            return false;
+        }
+
+        if($("#city").val() == ''){
+            Swal.fire({
+                    type: 'error',
+                    text: 'Please enter city',
+            });
+            return false;
+        }
+
+        if($("#adr_country").val()==''){
+            Swal.fire({
+                    type: 'error',
+                    text: 'Please select country',
+            });
+            return false;
+        }
+
+        if($("#adr_state").val()==''){
+            Swal.fire({
+                    type: 'error',
+                    text: 'Please select state/Province',
+            });
+            return false;
+        }
+
+        if($("#adr_post_code").val()==''){
+            Swal.fire({
+                    type: 'error',
+                    text: 'Please enter ZIP code',
+            });
+            return false;
+        }
+
+
+        if($("#eml_address").val() ==''){
+            Swal.fire({
+                    type: 'error',
+                    text: 'Please enter email',
+            });
+            return false;
+          }
+
+        var user_email_id = $("#eml_address").val();
+        var emailError = isValidEmail(user_email_id);
+
+         if(emailError==false){
+            Swal.fire({
+                    type: 'error',
+                    text: 'Please enter valid Email',
+            });
+            return false;
+        }
+
+        var mo = $("#phone_number").val();
+        if(mo==''){
+            Swal.fire({
+                    type: 'error',
+                    text: 'Please enter mobile number',
+            });
+            return false;
+        }
+
+        var password = $("#new_password_ext").val();
+        if(password==''){
+            Swal.fire({
+                    type: 'error',
+                    text: 'Please enter password',
+            });
+            return false;
+        }
+
+        var confirm_pass = $("#cnf_password").val();
+        if(confirm_pass==''){
+            Swal.fire({
+                    type: 'error',
+                    text: 'Please enter confirm password',
+            });
+            return false;
+        }
+
+        if(password != confirm_pass) {
+            Swal.fire({
+                    type: 'error',
+                    text: 'Password and confirm password do not match',
+            });
+            return false;
+        }
+
+        $.ajax({
+                url:'/user/register/',
+                type:'POST',
+                data:form_data,
+                processData: false,
+                contentType: false,
+                success: function(result)
+                {
+                    if(result.status == 'success')
+                    {
+                        window.location.href = '/payment/checkout_page/?uid='+result.uid+'&mid='+result.mid;
+                        $("#registration_form").trigger("reset");
+                    } else {
+                        Swal.fire({
+                                type: 'error',
+                                text: result.msg,
+                        });
+                        return false;
+                    }
+                }
+            });
+
+});
+
+function isValidEmail(email)
+{
+    var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+    return pattern.test(email);
+}
+
+function ValidatePassword() {
+    let password = $('#new_password_ext').val()
+    let conformPassword = $('#cnf_password').val()
+    if (password == '' & conformPassword == '')
+    {
+        alert('Please enter password');
+        return false;
+    }
+    else if (password == conformPassword)
+    {
+        return true;
+    } else if(password !='' &&  conformPassword == ""){
+        alert('Please enter confirm password');
+        return false;
+    }
+    else
+    {
+        alert('Please enter valid password');
+        return false;
+    }
+}
+
+function get_state() {
+    var country_id = $('#adr_country').val();
+    if(country_id=='231'){
+       $('#adr_state').attr('required', false);
+    } else {
+       $('#adr_state').attr('required', true);
+    }
+
+    if (country_id) {
+        $.ajax({
+            url: '/user/get_state/',
+            data: {
+                country_id: country_id
+            },
+            datatype: "text",
+            success: function (data) {
+                $('#adr_state').html('');
+                html = '';
+                html += '<option value="">Select State/Province</option>';
+                $.each(data.data, function (index, item) {
+                    html += '<option value="' + item.id + '">' + item.name +
+                        '</option>';
+                });
+
+                $('#adr_state').append(html);
+            }
+        });
+    }
+}
+    </script>
+</body>
+
+</html>

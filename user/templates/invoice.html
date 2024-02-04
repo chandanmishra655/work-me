@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block card %}
+<style>
+.table thead th {
+    min-width: 70px !important;
+}
+
+.padding {
+    padding: 2rem !important
+}
+
+.card {
+    margin-bottom: 30px;
+    border: none;
+    -webkit-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
+    -moz-box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22);
+    box-shadow: 0px 1px 2px 1px rgba(154, 154, 204, 0.22)
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #e6e6f2
+}
+
+h3 {
+    font-size: 20px
+}
+
+h5 {
+    font-size: 15px;
+    line-height: 26px;
+    color: #3d405c;
+    margin: 0px 0px 15px 0px;
+    font-family: 'Circular Std Medium'
+}
+
+.text-dark {
+    color: #3d405c !important
+}
+
+    </style>
+    <!-- Page Header-->
+    <header class="page-header">
+      <div class="container-fluid">
+        <h2 class="no-margin-bottom">Invoice</h2>
+      </div>
+    </header>
+    <!-- Dashboard Counts Section-->
+    <section class="dashboard-counts no-padding-bottom">
+
+
+ <div class="col-lg-12 col-md-12 col-sm-12 col-12 padding">
+     <div class="card">
+         <div class="card-header">
+             <img src="https://aaqf.net/wp-content/uploads/2020/09/top.jpg" class="d-inline-block" width="200px">
+             <div class="float-right">
+                 <h3 class="mb-0">Invoice #BBB10234</h3>
+                 Date: 12 Jun,2019
+             </div>
+         </div>
+         <div class="card-body">
+             <div class="row mb-4">
+                 <div class="col-sm-6">
+                     <h5 class="mb-3">From:</h5>
+                     <h3 class="text-dark mb-1">AAQF</h3>
+                     <div>3810 Gunn Highway Tampa, </div>
+                     <div>FL 33618 USA</div>
+                     <div>Tel.: 813.298.5868</div>
+                     <div>Email: contact@aaqf.net</div>
+                 </div>
+                 <div class="col-sm-6 ">
+                     <h5 class="mb-3">To:</h5>
+                     <h3 class="text-dark mb-1">{{user_name}}</h3>
+                     <div>{{address1}}</div>
+                     <div>{{city}}, {{state}}, {{country}}, {{zip_code}}</div>
+                     <div>Email: {{email}}</div>
+                     <div>Phone: {{phone_number}}</div>
+                 </div>
+             </div>
+             <div class="table-responsive-sm">
+                 <table class="table table-striped">
+                     <thead>
+                         <tr>
+                             <th class="center" width="30px">#</th>
+                             <th>Description</th>
+                             <th class="right">Start Date</th>
+                             <th class="center">Expiry Date</th>
+                             <th class="right">Total</th>
+                         </tr>
+                     </thead>
+                     <tbody>
+                         <tr>
+                             <td class="center"  width="30px">1</td>
+                             <td class="left">Iphone 10X with headphone</td>
+                             <td class="right">{{start_date|date}}</td>
+                             <td class="center">{{end_date|date}}</td>
+                             <td class="right">${{total_amount}}</td>
+                         </tr>
+
+                     </tbody>
+                 </table>
+             </div>
+             <div class="row">
+                 <div class="col-lg-4 col-sm-5">
+                 </div>
+                 <div class="col-lg-3 col-sm-5 ml-auto">
+                     <table class="table table-clear">
+                         <tbody>
+                             <tr>
+                                 <td class="left">
+                                     <strong class="text-dark">Subtotal</strong>
+                                 </td>
+                                 <td class="right">${{total_amount}}</td>
+                             </tr>
+
+                             <tr>
+                                 <td class="left">
+                                     <strong class="text-dark">Total</strong> </td>
+                                 <td class="right">
+                                     <strong class="text-dark">${{total_amount}}</strong>
+                                 </td>
+                             </tr>
+                         </tbody>
+                     </table>
+                 </div>
+             </div>
+         </div>
+         <div class="card-footer bg-white">
+             <p class="mb-0">aaqf.net, 3810 Gunn Highway Tampa, FL 33618 USA</p>
+         </div>
+     </div>
+ </div>
+
+    </section>
+
+{% endblock %}

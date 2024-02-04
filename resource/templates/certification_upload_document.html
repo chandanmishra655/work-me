@@ -1,0 +1,116 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block card %}
+<!-- Page Header-->
+<header class="page-header">
+  <div class="container-fluid">
+    <h2 class="no-margin-bottom">Certificate Upload Document</h2>
+  </div>
+</header>
+<section class="dashboard-counts no-padding-bottom">
+<div class="container-fluid">
+    {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %} style="color:green;"> {{ message }} </li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+  <div class="row bg-white has-shadow">
+    <div class="container bootstrap snippets bootdey">
+     <form name="upload_documents" id="upload_documents" enctype="multipart/form-data" method="post">
+       {% csrf_token %}
+        <div class="row">
+          <div class="col-lg-12 mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Certificate Name</label>
+            <input type="text" name="doc_name" class="form-control" id="exampleFormControlInput1" placeholder="">
+          </div>
+          <div class="col-lg-12 mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Visible For</label>
+             <div class="form-check">
+                  <input class="form-check-input check" type="radio" name="member_type" id="ind_member_type" value="2" checked>
+                  <label class="form-check-label" for="ind_member_type">
+                    Individual Members
+                  </label>
+                </div>
+            <div class="form-check">
+              <input class="form-check-input check" type="radio" name="member_type" id="org_member_type"  value="3">
+              <label class="form-check-label" for="org_member_type">
+                Organizational Member
+              </label>
+            </div>
+              <div class="col-lg-12 mb-3">
+                  <label for="user_name" class="form-label">Users Name</label>
+                  <input type="text" name="user_name" class="form-control" id="user_name" placeholder="Search users" oninput="get_user_list();">
+                  <input type="hidden" name="user_id" class="form-control" id="user_id" placeholder="">
+              </div>
+
+          </div>
+          <div class="col-lg-12">
+            <label for="doc_file_id" class="form-label">Certificate</label>
+              <div class="form-group files color">
+                <input type="file" name="doc_file" id="doc_file_id" class="form-control" multiple="">
+              </div>
+
+          </div>
+          <div class="clearfix"></div>
+          <div class="col-lg-5">
+          <input type="submit" class="btn btn-primary" name="Submit" value="Submit">
+          </div>
+      </div>
+       </form>
+</div>
+  </div>
+</div>
+</section>
+{% endblock %}
+{% block jsbody %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<script type="text/javascript">
+$('.check').change(function() {
+   $("#user_id").val('');
+   $("#user_name").val('');
+});
+
+function get_user_list(){
+    let user_type = $('input[name="member_type"]:checked').val();
+    let search_text = $("#user_name").val();
+    $("#user_id").val('');
+    $( "#user_name").autocomplete({
+		source: function( request, response ) {
+			$.ajax({
+				url:'/resource/get_users/',
+				data:{user_type:user_type, search_text:search_text},
+				datatype:"text",
+			   success:function(data)
+			   {
+				  response($.map(data.data, function (item) {
+					 return {
+						label: item.label,
+						value: item.label,
+						id: item.id,
+					 };
+				  }));
+			   }
+			});
+		},
+		minLength: 2,
+		autoFocus: true,
+		response: function(event,ui) {
+			if (!ui.content.length)
+			{
+				var noResult = {value:"", label:"No results found", desc:"", id:""};
+				ui.content.push(noResult);
+			}
+		},
+		select: function (event, ui) {
+			$("#user_id").val(ui.item.id);
+
+		}
+	});
+
+}
+</script>
+{% endblock %}

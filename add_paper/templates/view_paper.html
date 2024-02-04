@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block card %}
+<h5 class="h3 mb-4 text-gray-800">View Paper</h5>
+{% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %} style="color:green;"> {{ message }} </li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Paper Title</th>
+      <th scope="col">Paper Description</th>
+      <th colspan="2" scope="col">Paper Attachment</th>
+      <th scope="col">Marks</th>
+      <th scope="col">Rank</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for data in data %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+        <td><a href="/add_paper/edit_paper/{{data.pk}}/"> {{data.paper_title}} </a></td>
+      <td>{{data.paper_desc}}</td>
+      <td><a href="/media/{{data.paper_file}}" target="_blank">View</a> </td>
+      <td><a href="/media/{{data.paper_file}}" download="{{data.paper_file}}">Download</a> </td>
+      <td>{{data.paper_marks}}</td>
+      <td>{{data.paper_rank}}</td>
+
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

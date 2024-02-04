@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block card %}
+<!-- Page Header-->
+<header class="page-header">
+  <div class="container-fluid">
+    <h2 class="no-margin-bottom">Resources</h2>
+  </div>
+</header>
+<section class="dashboard-counts no-padding-bottom">
+<div class="container-fluid">
+  <div class="row bg-white has-shadow">
+    <div class="container bootstrap snippets bootdey">
+        <div class="row">
+            {% if get_doc %}
+            {% for doc in get_doc %}
+              <div class="col-lg-12">
+                <label class="form-label">{{doc.doc_name}}</label>
+              </div>
+              <div class="col-lg-12">
+                  <div class="form-group">
+                      <div class="text-align:center"><img src="/media/{{doc.file}}" height="100" width="100"></div>
+                  </div>
+              </div>
+            <div class="clearfix"></div>
+            {% endfor %}
+            {% endif %}
+
+            {% if get_video %}
+            {% for video in get_video %}
+              <div class="col-lg-12">
+                <label class="form-label">{{video.video_name}}</label>
+              </div>
+              <div class="col-lg-12">
+                  <div class="form-group">
+                      <div class="text-align:center">
+<!--                          <img src="/media/{{video.file}}" height="100" width="100">-->
+                      <video width="400" controls>
+                      <source src="/media/{{video.file}}" type="video/mp4">
+                      <source src="/media/{{video.file}}" type="video/ogg">
+                      Your browser does not support HTML video.
+                    </video>
+                      </div>
+                  </div>
+              </div>
+            <div class="clearfix"></div>
+            {% endfor %}
+            {% endif %}
+
+            {% if get_image %}
+            {% for image in get_image %}
+              <div class="col-lg-12">
+                <label class="form-label">{{image.image_name}}</label>
+              </div>
+              <div class="col-lg-12">
+                  <div class="form-group">
+                      <div class="text-align:center"><img src="/media/{{image.file}}" height="100" width="100"></div>
+                  </div>
+              </div>
+            <div class="clearfix"></div>
+            {% endfor %}
+            {% endif %}
+
+
+      </div>
+</div>
+  </div>
+</div>
+</section>
+{% endblock %}

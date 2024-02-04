@@ -1,0 +1,222 @@
+{% extends base_template %}
+{% load static %}
+{% block card %}
+<!-- Page Header-->
+<header class="page-header">
+   <div class="container-fluid">
+      <h2 class="no-margin-bottom">Edit User</h2>
+   </div>
+</header>
+<!-- Dashboard Counts Section-->
+<section class="dashboard-counts no-padding-bottom">
+    <div class="container-fluid">
+        <div class=" bg-white has-shadow">
+
+            <form class="row form-horizontal" role="form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="d-flex justify-content-between">
+                             <h3 class="w-75 py-3">Personal Information</h3>
+                        <!--Prefix-->
+                        <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#exampleModal">
+                        Reset Password </button>
+                        </div>
+                        <!-- /.d-flex -->
+
+                        <label for="prefix" class=" control-label">Prefix</label>
+
+                        <select class="form-control mb-3" id="prefix" name="prefix" aria-label="Default select example">
+                            <option value="">Please select</option>
+                            {% for prefix in prefix %}
+                            {% if user.user_op.op_id == prefix.op_id %}
+                            <option value="{{prefix.op_id}}" selected>{{prefix.op_name}}</option>
+                            {% else %}
+                            <option value="{{prefix.op_id}}">{{prefix.op_name}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                    <!-- firstName -->
+                </div>
+                <!-- /.col-md-6 -->
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="firstName" class="control-label">First Name</label>
+
+                        <input type="text" id="firstName" name="firstname" value="{{user.first_name}}" placeholder="First Name" class="form-control" autofocus>
+                    </div>
+                </div>
+                <!-- middleName -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="middleName" class="control-label">Middle Name</label>
+
+                        <input type="text" id="middleName" name="middlename" value="{{user.middle_name}}" placeholder="Middle Name" class="form-control" autofocus>
+
+                    </div>
+                    <!-- lastName -->
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="lastName" class="control-label">Last Name</label>
+
+                        <input type="text" id="lastName" name="lastname" value="{{user.last_name}}" placeholder="Last Name" class="form-control" autofocus>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="organization" class=" control-label">Organization</label>
+
+                        <input type="text" id="organization" name="organization" value="{{user.organization}}" placeholder="Organization" class="form-control" autofocus>
+
+                    </div>
+                    <!--Title -->
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="title" class=" control-label">Title</label>
+
+                        <input type="text" id="title" name="title" value="{{user.title}}" placeholder="Title" class="form-control" autofocus>
+
+                    </div>
+                    <!--Address Information -->
+                </div>
+                <!-- /.col-md-4 -->
+                 <h3 class="py-3 d-block w-100">Address Information</h3>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="mailingaddress" class=" control-label">Address line 1</label>
+                        <input type="text" id="mailingaddress" name="mailingaddress"  placeholder="Address line 1" class="form-control" autofocus>
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="address_line2" class=" control-label">Address line 2</label>
+                        <input type="text" id="address_line2" name="address_line2"  placeholder="Address line 2" class="form-control" autofocus>
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="city" class=" control-label">City</label>
+                        <input type="text" id="city" name="city" value="{{user.city}}" placeholder="City" class="form-control" autofocus>
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="adr_country" class=" control-label">Country</label>
+
+                        <select name="adr_country" class="form-control mb-3" id="adr_country" placeholder="Please select" onchange="resetValidationState();">
+                            <option value="">Please select</option>
+                            {% for country in country %}
+                            {% if user.user_oc.id == country.id %}
+                            <option value="{{country.id}}" selected>{{country.name}}</option>
+                            {% else %}
+                            <option value="{{country.id}}">{{country.name}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="adr_state" id="Caption_adr_state" class=" control-label" style="">State</label>
+
+                        <select name="adr_state" class="form-control mb-3" id="adr_state" tabindex="25" placeholder="Please select">
+                            <option value="">Select State/Province</option>
+                            {% for states in states %}
+                            {% if user.user_ost.id == states.id %}
+                            <option value="{{states.id}}" selected>{{states.name}}</option>
+                            {% else %}
+                            <option value="{{states.id}}">{{states.name}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+
+                    </div>
+
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="adr_post_code" class=" control-label">ZIP code</label>
+
+                        <input type="text" id="adr_post_code" name="adr_post_code" value="{{user.zip_code}}" placeholder="ZIP code" class="form-control" autofocus>
+
+                    </div>
+
+                </div>
+                <h3  class="py-3 d-block w-100 ">Web Login Information</h3>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="eml_address" class=" control-label">Email</label>
+
+                        <input type="text" id="eml_address" name="eml_address" value="{{user.email}}" placeholder="Email" class="form-control" readonly autofocus>
+
+                    </div>
+
+                </div>
+                <!-- /.col-md-4 -->
+ <div class="col-md-4">
+                    <div class="form-group">
+                         <label for="adr_country" class=" control-label">User Type</label>
+                        <select name="adr_country" class="form-control mb-3" id="user_type" required>
+                            <option value="">Select User Type</option>
+                            {% for country in country %}
+                            <option value="{{country.id}}">{{country.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                         <label for="adr_country" class=" control-label">Payment Status</label>
+                        <select name="adr_country" class="form-control mb-3" id="payment_status" required>
+                            <option value="1">Approved</option>
+                            <option value="2">Pending</option>
+                            <option value="3">Cancel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4" id="payment_mode">
+                    <div class="form-group">
+                         <label for="adr_country" class=" control-label">Payment Status</label>
+                        <select name="adr_country" class="form-control mb-3" id="p_mode" required>
+                            <option value="1">Online</option>
+                            <option value="2">Offline</option>
+                        </select>
+                    </div>
+                </div>
+                            <div class="col-md-12">
+                                   <button type="submit" name="registration_submit" class="btn btn-primary btn-block">Update Profile</button>
+
+                            </div>
+                <!-- /.col-md-4 -->
+
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+{% block jsbody %}
+<script type="text/javascript">
+
+
+</script>
+{% endblock %}

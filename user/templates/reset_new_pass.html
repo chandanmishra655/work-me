@@ -1,0 +1,149 @@
+{% load static %}
+
+<html lang="en">
+
+<head>
+    <title>ERP User Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="{% static 'new/img/favicon.ico'%}" />
+    <link rel="stylesheet" href="{% static 'new/css/style.css'%}">
+    <link rel="stylesheet" href="{% static 'new/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+	<style>
+	 /* new login page */
+	.login-main{font-family: 'Quicksand', sans-serif;}
+	.login-main .inner{display:flex;height:100%;}
+	.login-main .inner .cus-left{background:#454b5a;background-image:url("{% static 'new/img/circle_img.png'%}"), url("{% static 'new/img/circle_img_2.png'%}");
+		 background-repeat:no-repeat;background-position:right top, left bottom;color:#fff;padding-bottom:40px;}	 
+	.login-main .inner .cus-left .company-logo{padding:20px 20px 0px 20px;}
+	.login-main .inner .cus-left .cus-para{color:#ffffff;padding:100px 12% 0px 12%;font-size:45px;}
+	.login-main .inner .cus-right{padding-top:100px;background:#fff;padding-left:8%;padding-right:8%;font-size:12px;}
+	.login-main .inner .cus-right .cus-logo{height:40px;}
+	.login-main .inner .cus-right h3{padding-bottom:10px;}
+	.login-main .inner .cus-right .cus-input{border-radius:0;border:1px #ecf0f5 solid;box-shadow:none;height:30px;padding:4px 12px;background:#fff;}
+	.login-main .inner .cus-right .cus-links{padding-bottom:10px;}
+	.login-main .inner .cus-right .cus-links a{color:#454b5a;}
+	.login-main .inner .cus-right button{background:#454b5a;color:#fff;border:none;}
+	@media screen and (max-width: 1024px) {
+		.login-main .inner .cus-left{background-size:100px;}
+	}
+	@media screen and (max-width: 768px) {
+		.login-main .inner .cus-left{background-size:50px;}
+		.login-main .inner .cus-left .company-logo img{height:40px;}
+		.login-main .inner .cus-left .cus-para{padding:30px 12% 0px 12%;}
+		.login-main .inner{display:block;height:auto;}
+	}
+	/* end new login page */
+	</style>
+</head>
+
+<body class="login-main">
+    <div class="container-fluid">
+        <div class="row inner">
+            <div class="col-md-7 col-sm-6 cus-left">
+                <div class="company-logo"><img src="{% static 'new/img/logo.png'%}" /> Sendan International Company Ltd.</div>
+                <div class="cus-para">
+                    Make it beyond imagination.
+                    <!-- It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. -->
+                </div>
+            </div>
+            <div class="col-md-5 col-sm-6 cus-right">
+                <h3  style="padding-top:50px;">Reset Your Password</h3>
+                <form role="form" method="post" >{% csrf_token %}
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <div class="item_required"><input  class="form-control " type="password"  id="new_password1" name="new_password1" onblur="validPasswordSetup()">
+                            <span id="chars"></span></div>
+                        <label>Confirm Password</label>
+                        <div class="item_required"><input  class="form-control " type="password" id="new_password2" name="new_password2" onkeyup="ValidatePassword()"></div>
+                        <span id='message'></span>
+                    </div>
+
+                    <button type="submit" id="submitted" class="btn btn-default" onclick="myFunction()"  disabled>submit</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'new/js/jquery-3.3.1.slim.min.js'%}"></script>
+    <script src="{% static 'new/js/bootstrap.min.js'%}"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+     <script>
+  
+
+
+
+       //----- CODE FOR PASSWORD MATCH -------//
+
+	    function ValidatePassword() {
+	    	let password = $('#new_password1').val()
+	    	let conformPassword = $('#new_password2').val()
+	    	if (password == '' & conformPassword == '')
+	    	{
+	    		return false;
+	    	}
+	    	else if (password == conformPassword)
+			{
+				$('#message').html('Matching').css('color','green');
+				$('#submitted').prop('disabled', false);
+				return true;
+			}
+			else
+			{
+				$('#message').html('Not Matching').css('color', 'red');
+				$('#submitted').prop('disabled', true);
+				return false;
+			}
+
+		}
+
+       //----- CODE FOR PASSWORD MATCH ---- END ---//
+     //-----------Valid Password Setup -----//
+
+    function validPasswordSetup() {
+        let password = $('#new_password1').val();
+        $.ajax({
+            url: '/user/validate_password_code/',
+            data: {'password':password},
+            dataType: 'json',
+            success: function (data) {
+               if(data.is_success){
+                   {#$('.password-character').html('')#}
+                   chars.innerHTML= '';
+                }
+                else{
+                    {#$('.password-character').html(data.msg)#}
+                   chars.innerHTML=data.msg;
+                }
+                ValidatePassword();
+
+            }
+        })
+
+    }
+
+    //-------End Valid Password Setup-----//
+
+         function myFunction(){
+
+            //alert()
+          {% if messages %}
+            //<ul class="{{messages}}">
+                {% for message in messages %}
+                    {% if message.tags %}  {% endif %}
+                    alert('{{ message }}');
+                {% endfor %}
+            //</ul>
+
+           {% endif %}
+
+       }
+
+   </script>
+
+</body>
+
+</html>

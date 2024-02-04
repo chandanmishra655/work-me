@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AAQF Portal</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="{% static 'assets/font-awesome/css/font-awesome.min.css' %}">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="{% static 'assets/css/fontastic.css' %}">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="{% static 'assets/css/style.default.css' %}" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'assets/img/favicon.ico' %}">
+    <link href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+  </head>
+  <body>
+    <div class="page">
+      <!-- Main Navbar-->
+      <header class="header">
+          <!-- Search Box-->
+        <nav class="navbar">
+          <div class="search-box">
+            <button class="dismiss"><i class="icon-close"></i></button>
+            <form id="searchForm" action="#" role="search">
+              <input type="search" placeholder="What are you looking for..." class="form-control">
+            </form>
+          </div>
+          <div class="container-fluid">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+              <!-- Navbar Header-->
+              <div class="navbar-header">
+                <!-- Navbar Brand --><a href="/accounts/dashboard/" class="navbar-brand d-none d-sm-inline-block">
+                  <div class="brand-text d-none d-lg-inline-block"><span> </span><strong>AAQF Portal</strong></div>
+                  <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
+                <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
+              </div>
+              <!-- Navbar Menu -->
+              <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+
+                <!-- Logout    -->
+                <li class="nav-item"><a href="/accounts/logout/" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="page-content d-flex align-items-stretch">
+        <!-- Side Navbar -->
+        <nav class="side-navbar">
+          <!-- Sidebar Header-->
+          <div class="sidebar-header d-flex align-items-center">
+            <div class="avatar"><img src="{% static 'img/no-image.png' %}" alt="..." class="img-fluid rounded-circle"></div>
+            <div class="title">
+              <h1 class="h4">{{request.user.first_name}}</h1>
+            </div>
+          </div>
+          <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+          <ul class="list-unstyled">
+            <li class=""><a href="/accounts/dashboard/"> <i class="icon-home"></i>Dashboard </a></li>
+
+            <li><a href="#resuorcesdropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Resources</a>
+              <ul id="resuorcesdropdown" class="collapse list-unstyled ">
+<!--                 <li><a href="/resource/document/">Resources List</a></li>-->
+                <li><a href="/resource/document_list/">Documents list</a></li>
+                <li><a href="/resource/video_list/">Videos list</a></li>
+                <li><a href="/resource/image_list/">Photos list</a></li>
+
+              </ul>
+            </li>
+            <li><a href="#certificteropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Certificate</a>
+              <ul id="certificteropdownDropdown" class="collapse list-unstyled ">
+                <li><a href="/resource/certification_document_list/">Certificate List</a></li>
+                <li><a href="/resource/certification_document/">Upload Certificate</a></li>
+              </ul>
+            </li>
+              <li><a href="#members" aria-expanded="false" data-toggle="collapse"> <i class="fas fa-users"></i>Members</a>
+              <ul id="members" class="collapse list-unstyled ">
+                <li><a href="/user/individual/">Individual List</a></li>
+                <li><a href="/user/organizational/">Organizational List</a></li>
+                <li><a href="/user/accredited/">Accredited List</a></li>
+              </ul>
+            </li>
+              <li><a href="#indivisualdropdown" aria-expanded="false" data-toggle="collapse"> <i class="fas fa-users"></i>Users</a>
+              <ul id="indivisualdropdown" class="collapse list-unstyled ">
+                <li><a href="/user/user_list/">Users List</a></li>
+                <li><a href="/user/add_user/">Add User</a></li>
+              </ul>
+            </li>
+           <li><a href="/user/admin_transaction/"> <i class="fas fa-credit-card"></i>Transactions </a></li>
+
+          </ul>
+        </nav>
+        <div class="content-inner">
+
+            {% block card %}
+
+	      {% endblock %}
+
+
+          <!-- Page Footer-->
+          <footer class="main-footer">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-6">
+                  <p>Your company &copy; 2017-2020</p>
+                </div>
+                <div class="col-sm-6 text-right">
+                  <p>Design by <a href="#" class="external">AAQF</a></p>
+                  <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <!-- JavaScript files-->
+    <script src="{% static 'assets/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/popper.js/umd/popper.min.js' %}"> </script>
+    <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/jquery.cookie/jquery.cookie.js' %}"> </script>
+    <script src="{% static 'assets/jquery-validation/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'assets/js/front.js' %}"></script>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+  {% block jsbody %}
+
+    {% endblock %}
+  </body>
+</html>

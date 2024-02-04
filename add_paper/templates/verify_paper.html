@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block card %}
+<h5 class="h3 mb-4 text-gray-800">Verify Paper</h5>
+  {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %} style="color:green;"> {{ message }} </li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+<form role="form" method="post" enctype="multipart/form-data"> {% csrf_token %}
+    <div class="form-group">
+    <table width="100%"><tr>
+        {% for data in data %}
+
+        <td width="50%">
+            <div class="form-group">
+            <label for="paper_title">Paper Title</label>
+            <input type="text" class="form-control" name="paper_title" value="{{data.paper_title}}" readonly required autocomplete="off">
+            <input type="hidden" class="form-control" name="paper_id[]" value="{{data.paper_id}}">
+            </div>
+
+            <div class="form-group">
+                <label for="paper_desc">Paper Description</label>
+                <textarea class="form-control" name="paper_desc" rows="3" autocomplete="off" readonly>{{data.paper_desc}}</textarea>
+            </div>
+
+            <div class="form-group">
+                <embed src="/media/{{data.paper_file}}" width="580" height="400">
+            </div>
+            <div class="form-group">
+                <input type="radio" name="selected_paper" value="{{data.paper_id}}" required>
+            </div>
+        </td>
+
+        {% empty %}
+        <td width="100%"> There is no more paper to verify. Thanks!</td>
+
+        {% endfor %}
+    </tr></table>
+    </div>
+
+
+
+    {% if is_data == 1 %}
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary my-1">Submit</button>
+    </div>
+    {% endif %}
+</form>
+{% endblock %}

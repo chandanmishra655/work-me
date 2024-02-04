@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block card %}
+
+
+<!-- Page Header-->
+<header class="page-header">
+    <div class="container-fluid">
+        <h2 class="no-margin-bottom">Transaction Details</h2>
+    </div>
+</header>
+<!-- Dashboard Counts Section-->
+<section class="dashboard-counts no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row bg-white has-shadow">
+
+            <div class="table-responsive">
+                <table id="transaction_list" class="table table-bordred table-striped">
+                    <thead>
+                    <th>Sr. No</th>
+                    <th>Transaction Id</th>
+                    <th>Subscription </th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Email</th>
+                    <th>Created On</th>
+                    <th>Expired On</th>
+                    <th>Download Invoice</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block jsbody %}
+
+<script type="text/javascript">
+ $("#transaction_list").DataTable({
+        "language": {
+            "paginate": {
+                "previous":"Previous",
+                "next":"Next",
+            }
+        },
+        "processing": true,
+        "scrollX": true,
+        "searching":false,
+        "bLengthChange": false,
+        "serverSide": true,
+        "ordering": false,
+        "ajax":
+        {
+            "url": "/user/get_transaction_list/",
+            "data": function ( d )
+            {
+            }
+        }
+    });
+
+
+$(document).ready(function(){
+        $("#mytable #checkall").click(function () {
+        if ($("#mytable #checkall").is(':checked')) {
+            $("#mytable input[type=checkbox]").each(function () {
+                $(this).prop("checked", true);
+            });
+
+        } else {
+            $("#mytable input[type=checkbox]").each(function () {
+                $(this).prop("checked", false);
+            });
+        }
+    });
+    
+    $("[data-toggle=tooltip]").tooltip();
+});
+
+
+
+</script>
+
+{% endblock %}

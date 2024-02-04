@@ -1,0 +1,275 @@
+{% extends base_template %}
+{% load static %}
+{% block card %}
+<!-- Page Header-->
+<header class="page-header">
+   <div class="container-fluid">
+      <h2 class="no-margin-bottom">Add User</h2>
+   </div>
+</header>
+<!-- Dashboard Counts Section-->
+{% if success %}
+   <section class="dashboard-counts no-padding-bottom">
+    <div class="container-fluid">
+        <div class=" bg-white has-shadow">
+            <div class="Success"> User Added Successfully.</div>
+        </div>
+    </div>
+   </section>
+    {% else %}
+<section class="dashboard-counts no-padding-bottom">
+    <div class="container-fluid">
+        <div class=" bg-white has-shadow">
+
+            <form class="row form-horizontal" role="form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="is_admin" id="is_admin" value="{{global_is_admin}}">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="d-flex justify-content-between">
+                             <h3 class="w-75 py-3">Personal Information</h3>
+                        <!--Prefix-->
+
+                        </div>
+                        <!-- /.d-flex -->
+
+                        <label for="prefix" class=" control-label">Prefix</label>
+
+                        <select class="form-control mb-3" id="prefix" name="prefix" aria-label="Default select example">
+                            <option value="">Please select</option>
+                            {% for prefix in prefix %}
+                                <option value="{{prefix.op_id}}"  >{{prefix.op_name}}</option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                    <!-- firstName -->
+                </div>
+                <!-- /.col-md-6 -->
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="firstName" class="control-label">First Name</label>
+
+                        <input type="text" id="firstName" name="firstname" value="" placeholder="First Name" class="form-control" autofocus>
+                    </div>
+                </div>
+                <!-- middleName -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="middleName" class="control-label">Middle Name</label>
+
+                        <input type="text" id="middleName" name="middlename" value="" placeholder="Middle Name" class="form-control" autofocus>
+
+                    </div>
+                    <!-- lastName -->
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="lastName" class="control-label">Last Name</label>
+
+                        <input type="text" id="lastName" name="lastname" value="" placeholder="Last Name" class="form-control" autofocus>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="organization" class=" control-label">Organization</label>
+
+                        <input type="text" id="organization" name="organization" value="" placeholder="Organization" class="form-control" autofocus>
+
+                    </div>
+                    <!--Title -->
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="title" class=" control-label">Title</label>
+
+                        <input type="text" id="title" name="title" value="" placeholder="Title" class="form-control" autofocus>
+
+                    </div>
+                    <!--Address Information -->
+                </div>
+                <!-- /.col-md-4 -->
+                 <h3 class="py-3 d-block w-100">Address Information</h3>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="mailingaddress" class=" control-label">Address line 1</label>
+                        <input type="text" id="mailingaddress" name="mailingaddress"  placeholder="Address line 1" class="form-control" autofocus>
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="address_line2" class=" control-label">Address line 2</label>
+                        <input type="text" id="address_line2" name="address_line2"  placeholder="Address line 2" class="form-control" autofocus>
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="city" class=" control-label">City</label>
+                        <input type="text" id="city" name="city" value="" placeholder="City" class="form-control" autofocus>
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                     <label for="adr_country" class=" control-label">Country</label>
+                    <select name="adr_country" class="form-control mb-3" id="adr_country" onchange="get_state();"
+                        required>
+                        <option value="">Select Country</option>
+                        {% for country in country %}
+                        <option value="{{country.id}}">{{country.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                     <label for="adr_state" id="Caption_adr_state" class=" control-label" style="">State</label>
+
+                    <select name="adr_state" class="form-control mb-3" id="adr_state" tabindex="25" required>
+                        <option value="">State/Province</option>
+
+                    </select>
+                </div>
+                    </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="adr_post_code" class=" control-label">ZIP code</label>
+
+                        <input type="text" id="adr_post_code" name="adr_post_code" value=" " placeholder="ZIP code" class="form-control" autofocus>
+
+                    </div>
+
+                </div>
+                <h3  class="py-3 d-block w-100 ">Web Login Information</h3>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="eml_address" class=" control-label">Email</label>
+
+                        <input type="text" id="eml_address" name="eml_address" value=" " placeholder="Email" class="form-control" onchange="check_email_exist();" autofocus>
+
+                    </div>
+
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="new_password_ext" class="label-material">Password*</label>
+                        <input type="password" name="new_password" id="new_password_ext" class="form-control" autocomplete="off" required >
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="cnf_password" class="label-material">Confirm Password*</label>
+                        <input type="password" name="cnf_password" id="cnf_password" class="form-control" autocomplete="off" required >
+                    </div>
+                </div>
+
+                <div class="col-md-4"></div>
+                {% if global_is_admin %}
+                 <div class="col-md-4">
+                    <div class="form-group">
+                         <label for="adr_country" class=" control-label">Membership Type</label>
+                        <select name="membership_id" class="form-control mb-3" id="membership_id" required>
+                            <option value="">Select User Type</option>
+                            {% for country in country %}
+                            <option value="{{country.id}}">{{country.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                         <label for="adr_country" class=" control-label">Payment Status</label>
+                        <select name="adr_country" class="form-control mb-3" id="payment_status" required>
+                            <option value="1">Approved</option>
+                            <option value="2">Pending</option>
+                            <option value="3">Cancel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4" id="payment_mode">
+                    <div class="form-group">
+                         <label for="adr_country" class=" control-label">Payment Status</label>
+                        <select name="adr_country" class="form-control mb-3" name="p_mode" id="p_mode" required>
+                            <option value="1">Online</option>
+                            <option value="2">Offline</option>
+                        </select>
+                    </div>
+                </div>
+                {% endif %}
+
+                 <div class="col-md-12">
+                        <button type="submit" name="add_user" id="add_user" class="btn btn-primary btn-block">Create User</button>
+                    </div>
+                <!-- /.col-md-4 -->
+
+            </form>
+        </div>
+    </div>
+</section>
+    {% endif %}
+{% endblock %}
+{% block jsbody %}
+<script>
+        function get_state() {
+            var country_id = $('#adr_country').val();
+            if(country_id=='231'){
+               $('#adr_state').attr('required', false);
+            } else {
+               $('#adr_state').attr('required', true);
+            }
+
+            if (country_id) {
+                $.ajax({
+                    url: '/user/get_state/',
+                    data: {
+                        country_id: country_id
+                    },
+                    datatype: "text",
+                    success: function (data) {
+                        $('#adr_state').html('');
+                        html = '';
+                        html += '<option value="">Select State/Province</option>';
+                        $.each(data.data, function (index, item) {
+                            html += '<option value="' + item.id + '">' + item.name +
+                                '</option>';
+                        });
+
+                        $('#adr_state').append(html);
+                    }
+                });
+            }
+        }
+
+        function check_email_exist(){
+            var email = $(this).val();
+            $.ajax({
+                    url: '/user/check_email_exist/',
+                    data: {
+                        email: email
+                    },
+                    datatype: "text",
+                    success: function (data) {
+                        if(data.match){
+                            alert('Email_exists');
+                            $(this).val('');
+                        }
+                    }
+                });
+        }
+    </script>
+{% endblock %}

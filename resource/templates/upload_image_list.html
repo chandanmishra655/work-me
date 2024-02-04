@@ -1,0 +1,83 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+{% block card %}
+
+    <!-- Page Header-->
+    <header class="page-header">
+      <div class="container-fluid">
+        <h2 class="no-margin-bottom">Image list</h2>
+      </div>
+    </header>
+    <!-- Dashboard Counts Section-->
+<section class="dashboard-counts no-padding-bottom">
+    <div class="container-fluid">
+        <div class="row bg-white has-shadow">
+            <a href="/resource/image/">ADD</a>
+            <div class="table-responsive">
+                <table id="image_list" class="table table-bordred table-striped">
+                    <thead>
+                    <th><label>Sr. No</label></th>
+                    <th><label>Image Name</label></th>
+                    <th><label>Image</label></th>
+                    <th><label>Status</label></th>
+                    <th><label>Created On</label></th>
+                    <th>&nbsp;Action</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+
+{% block jsbody %}
+<script type="text/javascript">
+
+ $("#image_list").DataTable({
+        "language": {
+            "paginate": {
+                "previous":"Previous",
+                "next":"Next",
+            }
+        },
+        "processing": true,
+        "scrollX": true,
+        "searching":false,
+        "bLengthChange": false,
+        "serverSide": true,
+        "ordering": false,
+        "ajax":
+        {
+            "url": "/resource/get_image_list/",
+            "data": function ( d )
+            {
+            }
+        }
+ });
+
+    function delete_func(id, flag='D'){
+      if (confirm('Are you sure you want to delete user')) {
+
+        $.ajax({
+             url : '/resource/data_delete/',
+             type : 'GET',
+             data : {
+              'id' : id,
+              'flag' : 'I',
+              },
+             dataType:'json',
+             success : function(data) {
+                 alert(data.message);
+                 window.location.href = "";
+             },
+        });
+      } else {
+
+    }
+ }
+</script>
+{% endblock %}

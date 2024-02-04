@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bootstrap Material Admin by Bootstrapious.com</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="{% static 'assets/font-awesome/css/font-awesome.min.css' %}">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="{% static 'assets/css/fontastic.css' %}">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="{% static 'assets/css/style.default.css' %}" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'assets/img/favicon.ico' %}">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+        <style type="text/css">
+          
+.registration_form {
+	min-height: 768px;
+}
+
+
+
+
+
+button[name="registration_submit"] { width:auto; margin-left: 15px; }
+
+        </style>
+  </head>
+  <body>
+     
+
+    <section class="registration_form">
+        <div class="overlay"></div>
+        <!-- /.overlay -->
+    <div class="card-body">
+    <div class="container register-val">
+        <form class="form-horizontal" role="form" method="post" >{% csrf_token %}
+
+            <h2>Forgot Password</h2>
+            <p class="text-center"><span style="font-size: 16px;">If you forgot your password. Please enter your correct email address.</span></p> 
+             
+        <!-- Web Login Information -->
+        
+         <div class="form-group">
+             {% if messages %}
+                <div class="{{messages}}" style="width:auto !important;">
+                    {% for message in messages %}
+                    <div {% if message.tags %} class= "{{ message.tags }}" {% endif %}>{{ message }}</div>
+                    {% endfor %}
+                </div>
+
+               {% endif %}
+
+               <input type="text" class="input-material" id="username" placeholder="Email" name="email_or_username" >
+            </div>
+            <button type="submit" class="btn btn-primary">Reset Password</button>
+            <div class="cus-links" style="display:inline;">
+                <a href="/user/login" class="pull-right" style="margin-top:9px;" > Go to Login</a>
+            </div>
+
+        </form> <!-- /form --> 
+    </div> <!-- ./container -->
+	 </div> <!-- ./card body -->
+</section>
+
+
+
+    <script src="{% static 'assets/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/popper.js/umd/popper.min.js' %}"> </script>
+    <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/jquery.cookie/jquery.cookie.js' %}"> </script>
+    <script src="{% static 'assets/jquery-validation/jquery.validate.min.js' %}"></script>
+    <!-- Main File-->
+    <script src="js/front.js"></script>
+  </body>
+</html>

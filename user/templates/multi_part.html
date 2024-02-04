@@ -1,0 +1,393 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block card %}
+
+    <!-- Page Header-->
+    <header class="page-header">
+      <div class="container-fluid">
+        <h2 class="no-margin-bottom">Apply for accreditation</h2>
+      </div>
+    </header>
+    <!-- Dashboard Counts Section-->
+    <section class="dashboard-counts no-padding-bottom">
+      <!-- partial:index.partial.html -->
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-11 col-sm-10 col-md-10 col-lg-6 col-xl-6 text-center p-0 mt-3 mb-2">
+                <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                    <p>Fill all form field to go to next step</p>
+                    <form id="msform" name="user_info" method="post" enctype="multipart/form-data" role="form">
+                        {% csrf_token %}
+                        <!-- progressbar -->
+                        <ul id="progressbar" class="d-flex justify-content-center ">
+                            <li class="active" id="account"><strong>Account</strong></li>
+                            <li id="personal"><strong>Personal</strong></li>
+                        </ul>
+
+                        <fieldset id="full-text1">
+                            <div class="col-12">
+                                <h2 class="fs-title">Transfer information :</h2>
+                            </div>
+                            <div id="form-exams-list" class="col-12 w-100">
+                                <div class="form-group d-inline-flex justify-content-start flex-wrap">
+                                    <input type="text" class="form-control" name="trf_owner_name[]" maxlength="100" placeholder="Owner Name" required />
+                                    <input type="text" class="form-control" name="trf_personal_address[]" maxlength="200" placeholder="personal address" required/>
+                                    <input type="text" class="form-control number_only" name="trf_phone[]" maxlength="13" placeholder="phone" required/>
+                                    <input type="text" class="form-control english_email" name="trf_email[]" maxlength="100" placeholder="Email" required/>
+
+                                    <button class="btn btn-primary js-add--exam-row">Add </button>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group d-inline-flex justify-content-start flex-wrap">
+                                    <input type="text" class="form-control" name="facility_ceo_name" maxlength="100" placeholder="Facility CEO name" required/>
+                                    <input type="text" class="form-control number_only" name="facility_ceo_phone" maxlength="13" placeholder="phone" required/>
+                                    <input type="text" class="form-control english_email" name="facility_ceo_email" max="100" placeholder="Email" required/>
+                                </div>
+                            </div>
+                            <!-- /.col-12 -->
+                            <div class="col-12">
+                                <div class="form-group d-inline-flex justify-content-start flex-wrap">
+                                    <input type="text" class="form-control" name="medical_director_name" maxlength="100" placeholder="Medical/Clinical Director name" required/>
+                                    <input type="text" class="form-control number_only" name="medical_director_phone" maxlength="13" placeholder="phone" required/>
+                                    <input type="text" class="form-control english_email" name="medical_director_email" maxlength="100" placeholder="Email" required/>
+                                </div>
+                            </div>
+                            <!-- /.col-12 -->
+                            <div class="col-12">
+                                <div class="form-group d-inline-flex justify-content-start flex-wrap">
+                                    <input type="text" class="form-control" name="cnt_aaqf_name" maxlength="100" placeholder="Contact for AAQF Accreditation name" required/>
+                                    <input type="text" class="form-control number_only" name="cnt_aaqf_phone" maxlength="13" placeholder="phone" required/>
+                                    <input type="text" class="form-control english_email" name="cnt_aaqf_email" maxlength="100" placeholder="Email" required/>
+                                </div>
+                            </div>
+                            <!-- /.col-12 -->
+                            <div class="col-12">
+                                <div class="form-group d-inline-flex justify-content-start flex-wrap">
+                                    <input type="text" class="form-control" name="acnt_name" maxlength="100" placeholder="Accounting Contact name" required/>
+                                    <input type="text" class="form-control number_only" name="acnt_phone" maxlength="13" placeholder="phone" required/>
+                                    <input type="text" class="form-control english_email" name="acnt_email" maxlength="100" placeholder="Email" required/>
+                                </div>
+                            </div>
+                            <!-- /.col-12 -->
+                            <input type="button" name="next" class="action-button" value="Next" onclick="return validate();" />
+                            <input type="button" name="previous" class="action-button-previous" value="Previous" />
+                        </fieldset>
+                        <fieldset id="full-text">
+                            <div class="form-card">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <h2 class="fs-title">Facility Website:</h2>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="input-group mb-3">
+                                        <select class="custom-select" name="web_facility_type" id="inputGroupSelect01" required>
+                                          <option value="">Select website facility</option>
+                                          <option value="Ambulatory health care clinics">Ambulatory health care clinics</option>
+                                          <option value="Ambulatory surgery centers">Ambulatory surgery centers</option>
+                                          <option value="Birthing centers">Birthing centers</option>
+                                          <option value="College and university health centers">College and university health centers</option>
+                                          <option value="Community health centers">Community health centers</option>
+                                          <option value="Dental group practices">Dental group practices</option>
+                                          <option value="Diagnostic imaging centers">Diagnostic imaging centers</option>
+                                          <option value="Endoscopy centers">Endoscopy centers</option>
+                                          <option value="Federally Qualified Community Health Centers">Federally Qualified Community Health Centers</option>
+                                          <option value="Gynecology clinics">Gynecology clinics</option>
+                                          <option value="Independent physician associations (IPAs)">Independent physician associations (IPAs)</option>
+                                          <option value="Laboratories">Laboratories</option>
+                                          <option value="Manufacturing Facilities">Manufacturing Facilities</option>
+                                          <option value="Medical Home Organizations">Medical Home Organizations</option>
+                                          <option value="Multi-specialty group practices">Multi-specialty group practices</option>
+                                          <option value="Occupational health centers">Occupational health centers</option>
+                                          <option value="Office based anesthesia organizations">Office based anesthesia organizations</option>
+                                          <option value="Office based surgery centers and practices">Office based surgery centers and practices</option>
+                                          <option value="Ophthalmology clinics">Ophthalmology clinics</option>
+                                          <option value="Oral and maxillofacial surgeons’ offices">Oral and maxillofacial surgeons’ offices</option>
+                                          <option value="Pain management centers">Pain management centers</option>
+                                          <option value="Podiatry practices">Podiatry practices</option>
+                                          <option value="Psychiatry clinics">Psychiatry clinics</option>
+                                          <option value="Radiation oncology centers">Radiation oncology centers</option>
+                                          <option value="Single specialty group practices">Single specialty group practices</option>
+                                          <option value="Surgical recovery centers">Surgical recovery centers</option>
+                                          <option value="Tissue banks">Tissue banks</option>
+                                          <option value="Urgent or immediate care centers">Urgent or immediate care centers</option>
+                                          <option value="Women’s health centers">Women’s health centers</option>
+                                        </select>
+                                      </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="input-group mb-3">
+                                        <select class="custom-select" name="providers" id="providers" required>
+                                          <option value="">Select Providers</option>
+                                          <option value="Physicians">Physicians</option>
+                                          <option value="Nurses">Nurses</option>
+                                          <option value="Therapists">Therapists</option>
+                                          <option value="OTHER">Other licensed providers</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-none" id="other_id">
+                                <div class="form-group d-inline-flex justify-content-start flex-wrap">
+                                    <input type="text" class="form-control" name="others" id="others" placeholder="Specify Others" />
+                                </div>
+                                </div>
+                                <div class="col-12">
+                                <div class="form-group d-inline-flex justify-content-start flex-wrap">
+                                    <input type="text" class="form-control number_only" name="tax_identification_no" placeholder="Tax Identification Number" required/>
+                                </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="input-group mb-3">
+                                        <select class="custom-select" name="accreditation" id="accreditation" required>
+                                          <option value="">Select accreditation</option>
+                                            {% for i in list_plans %}
+                                            <option value="{{i.id}}">{{i.omp_name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                      </div>
+                                </div>
+
+                            </div>
+                            <input type="submit" name="submit" class="action-button" value="save" onclick="return validate1();"/>
+                            <input type="submit" name="submit" class="action-button" value="draft" onclick="return validate1();"/>
+                            <input type="button" name="previous" class="previous action-button-previous"
+                                value="Previous" />
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- partial -->
+    </section>
+
+{% endblock %}
+{% block jsbody %}
+<script>
+function validate(){
+    var trf_owner_name = $("input[name='trf_owner_name[]']").map(function(){return $(this).val();}).get();
+    if(trf_owner_name ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter owner name',
+        });
+        return false;
+    }
+
+    var trf_personal_address = $("input[name='trf_personal_address[]']").map(function(){return $(this).val();}).get();
+    if(trf_personal_address ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter personal address',
+        });
+        return false;
+    }
+
+    var trf_phone = $("input[name='trf_phone[]']").map(function(){return $(this).val();}).get();
+    if(trf_phone ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter phone',
+        });
+        return false;
+    }
+
+    var trf_email = $("input[name='trf_email[]']").map(function(){return $(this).val();}).get();
+    if(trf_email ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter email',
+        });
+        return false;
+    }
+    var facility_ceo_name = $("input[name='facility_ceo_name']").map(function(){return $(this).val();}).get();
+    if(facility_ceo_name ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter ceo name',
+        });
+        return false;
+    }
+
+    var facility_ceo_phone = $("input[name='facility_ceo_phone']").map(function(){return $(this).val();}).get();
+    if(facility_ceo_phone ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter ceo phone',
+        });
+        return false;
+    }
+
+    var facility_ceo_email = $("input[name='facility_ceo_email']").map(function(){return $(this).val();}).get();
+    if(facility_ceo_email ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter ceo email',
+        });
+        return false;
+    }
+
+    var medical_director_name = $("input[name='medical_director_name']").map(function(){return $(this).val();}).get();
+    if(medical_director_name ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter director name',
+        });
+        return false;
+    }
+
+    var medical_director_phone = $("input[name='medical_director_phone']").map(function(){return $(this).val();}).get();
+    if(medical_director_phone ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter director phone',
+        });
+        return false;
+    }
+
+    var medical_director_email = $("input[name='medical_director_email']").map(function(){return $(this).val();}).get();
+    if(medical_director_email ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter director email',
+        });
+        return false;
+    }
+
+    var cnt_aaqf_name = $("input[name='cnt_aaqf_name']").map(function(){return $(this).val();}).get();
+    if(cnt_aaqf_name ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter contact aaqf name',
+        });
+        return false;
+    }
+
+    var cnt_aaqf_phone = $("input[name='cnt_aaqf_phone']").map(function(){return $(this).val();}).get();
+    if(cnt_aaqf_phone ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter contact aaqf phone',
+        });
+        return false;
+    }
+
+    var cnt_aaqf_email = $("input[name='cnt_aaqf_email']").map(function(){return $(this).val();}).get();
+    if(cnt_aaqf_email ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter contact aaqf email',
+        });
+        return false;
+    }
+
+    var acnt_name = $("input[name='acnt_name']").map(function(){return $(this).val();}).get();
+    if(acnt_name ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter accounting contact name',
+        });
+        return false;
+    }
+
+    var acnt_phone = $("input[name='acnt_phone']").map(function(){return $(this).val();}).get();
+    if(cnt_aaqf_email ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter accounting contact phone',
+        });
+        return false;
+    }
+
+    var acnt_email = $("input[name='acnt_email']").map(function(){return $(this).val();}).get();
+    if(acnt_email ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter accounting contact email',
+        });
+        return false;
+    }
+
+    $('#full-text1').css({
+        'display': 'none',
+        'position': 'relative',
+        'opacity': '0'
+    });
+
+     $('#full-text').css({
+        'display': 'block',
+        'opacity': '1'
+    });
+    $("#personal").addClass('active');
+}
+
+function validate1(){
+    var web_facility_type = $("select[name='web_facility_type']").map(function(){return $(this).val();}).get();
+    if(web_facility_type ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Select web facility type',
+        });
+        return false;
+    }
+
+    var providers = $("select[name='providers']").map(function(){return $(this).val();}).get();
+    if(providers ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Select providers',
+        });
+        return false;
+    }
+
+    var tax_identification_no = $("input[name='tax_identification_no']").map(function(){return $(this).val();}).get();
+    if(tax_identification_no ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Enter tax identification no',
+        });
+        return false;
+    }
+
+    var accreditation = $("select[name='accreditation']").map(function(){return $(this).val();}).get();
+    if(accreditation ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Select accreditation',
+        });
+        return false;
+    }
+}
+
+$(function(){
+    $(".english_email").keypress(function(event){
+        var ew = event.which;
+        console.log(ew);
+        if(ew == 32)
+            return true;
+        if(46 <= ew && ew <= 57)
+            return true;
+        if(64 <= ew && ew <= 90)
+            return true;
+        if(97 <= ew && ew <= 122)
+            return true;
+        return false;
+    });
+});
+$(document).on('keypress', '.number_only', function(e) {
+        if(isNaN(this.value+""+String.fromCharCode(e.charCode))) return false;
+});
+
+$(document).on('change', '#providers', function() {
+    var provider = $(this).val();
+    if(provider == 'OTHER'){
+        $("#other_id").removeClass('d-none');
+    } else {
+        $("#other_id").addClass('d-none');
+    }
+});
+</script>
+{% endblock %}

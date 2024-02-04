@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block card %}
+<header class="page-header">
+    <div class="container-fluid">
+        <h2 class="no-margin-bottom">Membership plan</h2>
+    </div>
+</header>
+<div class="col-lg-8 bg-white">
+  <div class="form">
+    <div class="content">
+        <div class="card-deck mb-3 text-center">
+            {% if user_type == 2 or user_type == 3 or user_type == 4 %}
+            <div class="card mb-4 box-shadow">
+            <div class="card-header">
+            <h3>Current Plan: </h3><h4 class="my-0 font-weight-normal">{{plan_name}}</h4>
+            </div>
+            <div class="card-body">
+            <h3>Start Date: </h3><h4 class="my-0 font-weight-normal">{{start_date|date}}</h4>
+            <h3>End Date: </h3><h4 class="my-0 font-weight-normal">{{end_date|date}}</h4>
+            </div>
+            </div>
+            {% endif %}
+             {% csrf_token %}
+            {% for data in data %}
+            <div class="card mb-4 box-shadow">
+<div class="card-header">
+<h4 class="my-0 font-weight-normal">{{data.omp_name}}</h4>
+</div>
+<div class="card-body">
+<h1 class="card-title pricing-card-title">${{data.omp_price}} <small class="text-muted">/ Year</small></h1>
+<ul class="list-unstyled mt-3 mb-4">
+  <li>{{data.omp_desc}}</li>
+</ul>
+    {% if mid == data.pk or data.omp_price < plan_price %}
+<a class="btn btn-lg btn-block btn-primary" style="pointer-events: none">Select Plan<i class="fa fa-angle-right"></i></a>
+    {% else %}
+    <a id="plan_btn_{{data.pk}}" onclick="return make_payment({{data.pk}});" class="btn btn-lg btn-block btn-primary">Select Plan<i class="fa fa-angle-right"></i></a>
+    {% endif %}
+</div>
+</div>
+            {% endfor %}
+        </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+
+  function make_payment(keyid){
+  let uid = '{{uid}}';
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+// Create an instance of the Stripe object with your publishable API key
+  const stripe = Stripe("{{ key }}");
+<!--  let checkoutButton;-->
+<!--  checkoutButton = document.getElementById("plan_btn_"+keyid);-->
+<!--  alert(checkoutButton); return false;-->
+
+<!--  checkoutButton.addEventListener("click", function () {-->
+  fetch("/payment/transaction/", {
+    method: "POST",
+    headers: {
+        'X-CSRFToken': csrftoken,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      uid: uid,
+      mid: keyid,
+      plan_type:'new',
+      })
+  }).then(function (response) {
+      return response.json();
+    }).then(function (session) {
+      return stripe.redirectToCheckout({ sessionId: session.id });
+    }).then(function (result) {
+      // If redirectToCheckout fails due to a browser or network
+      // error, you should display the localized error message to your
+      // customer using error.message.
+      if (result.error) {
+        alert(result.error.message);
+      }
+    }).catch(function (error) {
+      console.error("Error:", error);
+    });
+<!--  });-->
+
+}
+</script>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block card %}
+<h5 class="h3 mb-4 text-gray-800">Upload Paper</h5>
+  {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li  {% if message.tags %} class=" {{ message.tags }} " {% endif %} style="color:green;"> {{ message }} </li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+<form role="form" method="post" enctype="multipart/form-data"> {% csrf_token %}
+  <div class="form-group">
+    <label for="paper_title">Paper Title</label>
+    <input type="text" class="form-control" id="paper_title" name="paper_title" value="{{data.paper_title}}" required autocomplete="off">
+  </div>
+
+  <div class="form-group">
+    <label for="paper_desc">Paper Description</label>
+    <textarea class="form-control" id="paper_desc" name="paper_desc" rows="3" autocomplete="off">{{data.paper_desc}}</textarea>
+  </div>
+
+    <div class="form-group">
+    <label for="paper_file">Attach Paper</label>
+    <input type="file" class="form-control-file" name="paper_file" id="paper_file" accept=".pdf">
+  </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary my-1" {% if data.paper_submit_tf %} disabled {% endif %}>Update</button>
+        <button type="button" class="btn btn-primary my-1" {% if data.paper_submit_tf %} disabled {% endif %} data-toggle="modal" data-target="#submitModal">Submit</button>
+        <button type="button" class="btn btn-primary my-1" {% if data.paper_submit_tf %} disabled {% endif %} data-toggle="modal" data-target="#deleteModal">Delete</button>
+    </div>
+</form>
+{% endblock %}

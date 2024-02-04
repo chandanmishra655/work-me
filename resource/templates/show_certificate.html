@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block card %}
+<!-- Page Header-->
+<header class="page-header">
+  <div class="container-fluid">
+    <h2 class="no-margin-bottom">Certificate</h2>
+  </div>
+</header>
+<section class="dashboard-counts no-padding-bottom">
+<div class="container-fluid">
+  <div class="row bg-white has-shadow">
+    <div class="container bootstrap snippets bootdey">
+        <div class="row">
+            {% if certificate %}
+                    {% for cert in get_certificate %}
+                      <div class="col-lg-12">
+                      </div>
+                      <div class="col-lg-12">
+                          <div class="form-group">
+                              <div class="text-align:center"><img src="/media/{{cert.certificate}}" width="300px;"> </div>
+                          </div>
+                      </div>
+                      <div class="clearfix"></div>
+                      <div class="col-lg-5">
+                          <a href="/media/{{cert.certificate}}" class="btn btn-primary" download>Download</a>
+                      </div>
+                    {% endfor %}
+            {% else %}
+            <div class="col-lg-12">
+                <div class="te">Please purchase plan to get certificate.</div>
+
+             </div>
+            {% endif %}
+      </div>
+</div>
+  </div>
+</div>
+</section>
+{% endblock %}

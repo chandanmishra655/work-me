@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Stripe Checkout Sample</title>
+    <meta name="description" content="A demo of Stripe Payment Intents" />
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'assets/css/normalize.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/css/global.css' %}" />
+    <!-- Load Stripe.js on your website. -->
+
+<!--    <script src="{% static 'js/script.js' %}" defer></script>-->
+  </head>
+
+  <body>
+    <div class="togethere-background"></div>
+    <div class="sr-root">
+      <div class="sr-main">
+        <header class="sr-header">
+          <div class="sr-header__logo"></div>
+        </header>
+        <h1>Choose a collaboration plan</h1>
+
+        <div class="price-table-container">
+          <section>
+              <img
+                src="{% static 'img/starter.png' %}"
+                width="120"
+                height="120"
+                />
+              <div class="name">Starter</div>
+              <div class="price">100</div>
+              <div class="duration">per month</div>
+              <button type="button" id="basic-plan-btn" class="plan-btn" onclick="return make_payment(1);">Select</button>
+          </section>
+          <section>
+             <div class="col-sm-12" style="text-align:center"><img
+                src="{% static 'img/professional.png' %}"
+                width="120"
+                height="120"
+                /></div>
+              <div class="name">Professional</div>
+              <div class="price">200</div>
+              <div class="duration">per month</div>
+              <button type="button" id="pro-plan-btn" class="plan-btn" onclick="return make_payment(2);">Select</button>
+<!--            </form>-->
+          </section>
+          {% csrf_token %}
+        </div>
+      </div>
+    </div>
+    <div id="error-message" class="error-message"></div>
+  </body>
+</html>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+// Create an instance of the Stripe object with your publishable API key
+  const stripe = Stripe("{{ key }}");
+
+  function make_payment(type){
+  let checkoutButton;
+  if(type==1){
+    checkoutButton = document.getElementById("basic-plan-btn");
+  } else if(type==2){
+    checkoutButton = document.getElementById("pro-plan-btn");
+  } else{
+    checkoutButton = 0;
+  }
+
+  checkoutButton.addEventListener("click", function () {
+  fetch("/payment/transaction/", {
+    method: "POST",
+    headers: {
+        'X-CSRFToken': csrftoken
+    }
+  })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (session) {
+      return stripe.redirectToCheckout({ sessionId: session.id });
+    })
+    .then(function (result) {
+      // If redirectToCheckout fails due to a browser or network
+      // error, you should display the localized error message to your
+      // customer using error.message.
+      if (result.error) {
+        alert(result.error.message);
+      }
+    })
+    .catch(function (error) {
+      console.error("Error:", error);
+    });
+  });
+
+}
+
+
+
+
+
+</script>

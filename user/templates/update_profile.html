@@ -1,0 +1,299 @@
+{% extends base_template %}
+{% load static %}
+
+{% block card %}
+
+<!-- Page Header-->
+<header class="page-header">
+    <div class="container-fluid">
+        <h2 class="no-margin-bottom">Update Profile</h2>
+    </div>
+</header>
+<!-- Dashboard Counts Section-->
+<section class="dashboard-counts no-padding-bottom">
+    <div class="container-fluid">
+        <div class=" bg-white has-shadow">
+
+            <form class="row form-horizontal" role="form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="d-flex justify-content-between">
+                             <h3 class="w-75 py-3">Personal Information</h3>
+                        <!--Prefix-->
+                        <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#change_password">
+                        Reset Password
+                        </button>
+                        </div>
+                        <!-- /.d-flex -->
+
+                        <label for="prefix" class=" control-label">Prefix</label>
+
+                        <select class="form-control mb-3" id="prefix" name="prefix" aria-label="Default select example">
+                            <option value="">Please select</option>
+                            {% for prefix in prefix %}
+                            {% if user.user_op.op_id == prefix.op_id %}
+                            <option value="{{prefix.op_id}}" selected>{{prefix.op_name}}</option>
+                            {% else %}
+                            <option value="{{prefix.op_id}}">{{prefix.op_name}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                    <!-- firstName -->
+                </div>
+                <!-- /.col-md-6 -->
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="firstName" class="control-label">First Name</label>
+
+                        <input type="text" id="firstName" name="firstname" value="{{user.first_name}}" placeholder="First Name" class="form-control" autofocus>
+                    </div>
+                </div>
+                <!-- middleName -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="middleName" class="control-label">Middle Name</label>
+
+                        <input type="text" id="middleName" name="middlename" value="{{user.middle_name}}" placeholder="Middle Name" class="form-control" autofocus>
+
+                    </div>
+                    <!-- lastName -->
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="lastName" class="control-label">Last Name</label>
+
+                        <input type="text" id="lastName" name="lastname" value="{{user.last_name}}" placeholder="Last Name" class="form-control" autofocus>
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="organization" class=" control-label">Organization</label>
+
+                        <input type="text" id="organization" name="organization" value="{{user.organization}}" placeholder="Organization" class="form-control" autofocus>
+
+                    </div>
+                    <!--Title -->
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="title" class=" control-label">Title</label>
+
+                        <input type="text" id="title" name="title" value="{{user.title}}" placeholder="Title" class="form-control" autofocus>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="title" class=" control-label">Profile</label>
+                        <input type="file" id="profile" name="profile" value="" placeholder="profile" class="form-control" autofocus>
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+                 <h3 class="py-3 d-block w-100">Address Information</h3>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="mailingaddress" class=" control-label">Address line 1</label>
+                        <input type="text" id="mailingaddress" name="mailingaddress"  placeholder="Address line 1" class="form-control" autofocus>
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="address_line2" class=" control-label">Address line 2</label>
+                        <input type="text" id="address_line2" name="address_line2"  placeholder="Address line 2" class="form-control" autofocus>
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="city" class=" control-label">City</label>
+                        <input type="text" id="city" name="city" value="{{user.city}}" placeholder="City" class="form-control" autofocus>
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="adr_country" class=" control-label">Country</label>
+
+                        <select name="adr_country" class="form-control mb-3" id="adr_country" placeholder="Please select" onchange="resetValidationState();">
+                            <option value="">Please select</option>
+                            {% for country in country %}
+                            {% if user.user_oc.id == country.id %}
+                            <option value="{{country.id}}" selected>{{country.name}}</option>
+                            {% else %}
+                            <option value="{{country.id}}">{{country.name}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="adr_state" id="Caption_adr_state" class=" control-label" style="">State</label>
+
+                        <select name="adr_state" class="form-control mb-3" id="adr_state" tabindex="25" placeholder="Please select">
+                            <option value="">Select State/Province</option>
+                            {% for states in states %}
+                            {% if user.user_ost.id == states.id %}
+                            <option value="{{states.id}}" selected>{{states.name}}</option>
+                            {% else %}
+                            <option value="{{states.id}}">{{states.name}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+
+                    </div>
+
+                </div>
+                <!-- /.col-md-4 -->
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="adr_post_code" class=" control-label">ZIP code</label>
+
+                        <input type="text" id="adr_post_code" name="adr_post_code" value="{{user.zip_code}}" placeholder="ZIP code" class="form-control" autofocus>
+
+                    </div>
+
+                </div>
+                <h3  class="py-3 d-block w-100 ">Web Login Information</h3>
+
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="eml_address" class=" control-label">Email</label>
+
+                        <input type="text" id="eml_address" name="eml_address" value="{{user.email}}" placeholder="Email" class="form-control" readonly autofocus>
+
+                    </div>
+
+                </div>
+                <!-- /.col-md-4 -->
+
+                            <div class="col-md-12">
+                                   <button type="submit" name="registration_submit" class="btn btn-primary btn-block">Update Profile</button>
+
+                            </div>
+                <!-- /.col-md-4 -->
+
+            </form>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="change_password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Reset Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+    <form class="row form-horizontal" id="password_update" role="form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+        <div class="col-sm-12">
+          <div class="form-group">
+              <label for="firstName" class="control-label">Current Password</label>
+              <input type="password" name="current_password" id="current_password"  placeholder="Current Password" class="form-control" autofocus>
+          </div>
+      </div>
+
+        <div class="col-sm-12">
+          <div class="form-group">
+              <label for="firstName" class="control-label">New Password</label>
+              <input type="password" name="new_password" id="new_password"  placeholder="New Password" class="form-control" autofocus>
+          </div>
+      </div>
+                <!-- middleName -->
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label for="firstName" class="control-label">Confirm Password</label>
+                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" class="form-control" autofocus></div>
+        </div>
+                <!-- middleName -->
+    </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" onclick="return validate_pwd();">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+{% block jsbody %}
+<script>
+  function validate_pwd(){
+    var current_password = $("input[name='current_password]").val();
+    if(current_password == ""){
+        Swal.fire({
+            type: 'error',
+            text: 'Please enter current password',
+        });
+        return false;
+    }
+    var new_password = $("input[name='new_password']").val();
+
+    if(new_password ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Please enter new password',
+        });
+        return false;
+    }
+
+    var confirm_password = $("input[name='confirm_password']").val();
+    if(confirm_password ==""){
+        Swal.fire({
+            type: 'error',
+            text: 'Please enter confirm password',
+        });
+        return false;
+    }
+
+    if (new_password != confirm_password)
+    {
+        Swal.fire({
+            type: 'error',
+            text: 'Password does not match',
+        });
+        return false;
+    }
+    var form_data = $("#password_update").serialize();
+    $.ajax({
+        url: '/user/change_password_popup/',
+        data: form_data,
+        type: 'POST',
+        success: function(res){
+            if(res.is_valid==1){
+                Swal.fire({
+                    type: 'success',
+                    text: res.msg,
+                }).then(function(){
+                    window.location.href = '/user/login/';
+                });
+            } else {
+                Swal.fire({
+                    type: 'error',
+                    text: res.msg,
+                });
+                return false;
+            }
+        }
+
+    });
+
+}
+</script>
+{% endblock %}
