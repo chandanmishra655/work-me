@@ -158,6 +158,7 @@ def transaction(request):
 
         if int(mid) == int(membership_id):
             plan_price = int(plan_price) * 100
+            one_year_from_now = datetime.now() + timedelta(days=365)
             try:
                 # Create new Checkout Session for the order
                 # Other optional params include:
@@ -172,27 +173,15 @@ def transaction(request):
                     cancel_url=domain_url + 'payment/canceled/',
                     payment_method_types=['card'],
                     customer_email=email,
-                    mode='payment',
+                    mode='subscription',
                     line_items=[
                         {
-                            "price_data": {
-                                "currency": "USD",
-                                "unit_amount": plan_price,
-                                "product_data": {
-                                    "name": plan_name,
-                                },
-                            },
+                            "price": "price_1OhQYEGYzveC7pksi6s2prIm",  # Replace with your specific price ID
                             "quantity": 1,
                         },
                     ],
-                    metadata={
-                        "mid": membership_id,
-                        "user_id": uid,
-                        "insert_id": insert_id,
-                        "plan_type": plan_type,
-                        "order_id": order_id
-                    },
                 )
+                print(checkout_session,'++++++ this is checkout session +++++++')
                 return JsonResponse({'id': checkout_session.id})
             except Exception as e:
                 result = {'error': str(e), 'message': 'Payment failed'}
@@ -456,7 +445,7 @@ def create_image(request):
 def renew(request):
     qs = OmMembershipPlan.objects.filter(omp_plan_type__in=[1, 2]).order_by('omp_order_by')
     key = settings.STRIPE_PUBLISHABLE_KEY
-    user_id = request.session['id']
+    user_id = request.session['_auth_user_id']
     user_type = 0
     if user_id:
         try:

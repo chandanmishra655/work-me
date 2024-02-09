@@ -56,6 +56,7 @@ def login_user(request):
                     return render(request, 'login1.html',
                                   {'form2': form2, id: id, 'not_match': not_match, 'is_taken': is_taken})
                 else:
+                    print(request.session,'++++++++ this is session +++++++++++')
                     if user.is_active:
                         request.session['username'] = username
                         request.session['id'] = user.id
@@ -78,7 +79,7 @@ def login_user(request):
                 is_taken = False
                 form2 = LoginForm()
                 return render(request, 'login1.html',
-                              {'form2': form2, id: id, 'not_match': not_match, 'is_taken': is_taken})
+                              {'form2': form2, 'not_match': not_match, 'is_taken': is_taken})
     else:
         form2 = LoginForm()
     return render(request, 'login1.html', {'form2': form2, id: id, 'not_match': not_match})
@@ -123,6 +124,32 @@ def register(request):
             result['msg'] = 'Email already registered'
             result['mid'] = mid
             return JsonResponse(result)
+        
+        print("here am i ")
+
+        dict_new = {
+            "username":eml_address, 
+            "email":eml_address, 
+            "user_op_id":prefix,
+            "first_name":first_name, 
+            "last_name":last_name, 
+            "middle_name":middle_name,
+            "organization":organization, 
+            "title":title,
+            "address1":mailingaddress, 
+            "address2":address_line2, 
+            "city":city,
+            "user_oc_id":adr_country, 
+            "zip_code":adr_post_code,
+            "membership_id":1,
+            "phone_number":phone_number,
+            "password":new_password
+        }
+
+        print(dict_new,'+++++++++')
+
+        membership_new_id = OmMembershipPlan.objects.last()
+        print(membership_new_id.omp_id,'+++++++++++ this is id ++++++++++++')
 
         try:
             qs = CustomUser.objects.create_user(username=eml_address, email=eml_address, user_op_id=prefix,
@@ -130,13 +157,14 @@ def register(request):
                                                 organization=organization, title=title,
                                                 address1=mailingaddress, address2=address_line2, city=city,
                                                 user_oc_id=adr_country, zip_code=adr_post_code,
-                                                membership_id=membership_id,
+                                                membership_id=membership_new_id.omp_id,
                                                 phone_number=phone_number,
                                                 password=new_password)
             if qs:
                 if adr_state:
                     qs.user_ost_id = adr_state
                     qs.save()
+                    print("created")
                 try:    
                     send_email(request, eml_address)
                 except Exception as e:
@@ -178,7 +206,8 @@ def membership(request):
 
 @login_required
 def dashboard(request):
-    user_id = request.session['id']
+
+    user_id = request.session['_auth_user_id']
     objects = Q(user_id=user_id)
     q = UserInfo.objects.filter(objects)
     lst_count = len(q)
@@ -413,7 +442,9 @@ def applied_update(request, id):
 
 @login_required
 def update_profile(request, id):
-    user_type = request.session['user_type']
+    print(request.session.items())
+    user_type = request.session['_auth_user_id']
+
     if user_type == 1:
         base_template = 'admin_base.html'
     else:
@@ -802,7 +833,7 @@ def multi_part(request):
                 user_obj.id))
 
     else:
-        accreditation = OmMembershipPlan.objects.filter(omp_plan_type='3')
+        accreditation = OmMembershipPlan.objects.filter(id=1)
         list_plans = []
         for i in accreditation:
             dict_plans = {'id': i.omp_id, 'omp_code': i.omp_code, 'omp_name': i.omp_name, 'omp_desc': i.omp_desc,
